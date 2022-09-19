@@ -1,0 +1,11 @@
+{
+  "pc": [
+    {
+      "ip": "10.210.26.57",
+      "user": "ubuntu",
+      "pass": "zxc1234",
+      "path": "/home/ubuntu/vasily_agg_off",
+      "tcpreplay_cmd": "echo zxc1234 | sudo -S tcpreplay -i enp1s0f0 -K -M 10Mb  11097_alltransit.pcap"
+    }
+  ]
+}

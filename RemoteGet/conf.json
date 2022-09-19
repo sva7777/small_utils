@@ -1,0 +1,26 @@
+{
+  "pc": [
+    {
+      "ip": "10.210.26.148",
+      "user": "ubuntu",
+      "pass": "zxc1234",
+      "remotepath": "/home/ubuntu/vasily_agg_off",
+      "filename": "enp1s0f0.pcap"
+    },
+    {
+      "ip": "10.210.26.148",
+      "user": "ubuntu",
+      "pass": "zxc1234",
+      "remotepath": "/home/ubuntu/vasily_agg_off",
+      "filename": "enp1s0f1.pcap"
+    },
+    {
+      "ip": "10.210.26.57",
+      "user": "ubuntu",
+      "pass": "zxc1234",
+      "remotepath": "/home/ubuntu/vasily_agg_off",
+      "filename": "enp1s0f1.pcap"
+    }
+  ],
+  "store_dir": "/home/vasily/GET_FROM_REMOTE"
+}
