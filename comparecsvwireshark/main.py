@@ -3,59 +3,62 @@
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
-import re
+import json
+from enum import Enum
 
+class TypeOfCompare(Enum):
+    IP = 1
+    TCP_OR_UDP =2
 
-def process_file(file_name, col_number):
-    fileinput= open(file_name,'r')
-    fileoutput=open('write_'+file_name,'w')
+def process_file(file_name):
+    with open(file_name, 'r') as file_stream:
+        json_dict = json.load(file_stream)
 
-    for line in fileinput:
-        re_comp= re.compile(r"\"Address A\",\"")
-        match_re= re.match(re_comp, line )
-        if match_re:
-            continue
-        test = line.split(",",col_number)
-        if len(test) >col_number :
-            substring = ''
-            for i in range(col_number):
-                substring = substring + test[i]+','
+    for entry in json_dict:
+        yield entry
 
-            yield substring
+def compare_files(fileoriginal_gen , balanced_files, compare) :
 
-
-def compare_files(fileoriginal_gen , colnumber, temp_write_files) :
-
-    for line in fileoriginal_gen:
-        # find line from original
+    for entry in fileoriginal_gen:
         res = False
-        for filename in temp_write_files:
-            gen = process_file(filename,colnumber)
+        for filename in balanced_files:
+            gen = process_file(filename)
 
-            for line1 in gen:
-                if line == line1:
-                   res = True
-                   break;
-
+            for inner_entry in gen:
+                if compare == TypeOfCompare.IP:
+                    if entry['Address A'] == inner_entry['Address A'] and \
+                        entry['Address B'] == inner_entry['Address B'] and \
+                        entry['Пакеты'] == inner_entry['Пакеты'] :
+                        res = True
+                        break;
+                elif compare == TypeOfCompare.TCP_OR_UDP:
+                    if entry['Address A'] == inner_entry['Address A'] and \
+                        entry['Address B'] == inner_entry['Address B'] and \
+                        entry['Пакеты'] == inner_entry['Пакеты'] and \
+                        entry['Port A'] == inner_entry['Port A'] and \
+                        entry['Port B'] == inner_entry['Port B'] :
+                        res = True
+                        break;
+                else:
+                    print("unsupported compare type")
 
         if res == False:
-            print(line+'\n');
+            print(str(entry)+'\n');
 
 
 
 if __name__ == '__main__':
-    # for ethernet and IP colnumber==3,  for udp and tcp colnumber==5
-    colnumber = 5
 
-    temp_result_files = []
+    balanced_files = []
 
-    original_gen= process_file('original.csv',colnumber)
+    original_gen= process_file('original.json')
 
-    temp_result_files.append( "1.csv" )
-    temp_result_files.append( "2.csv" )
-    temp_result_files.append( "3.csv" )
+    balanced_files.append( "1.json" )
+    balanced_files.append( "2.json" )
+    balanced_files.append( "3.json" )
+    balanced_files.append( "4.json" )
 
-    compare_files(original_gen, colnumber, temp_result_files)
+    compare_files(original_gen, balanced_files, TypeOfCompare.TCP_OR_UDP )
 
 
 
