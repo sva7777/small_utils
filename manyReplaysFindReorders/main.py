@@ -1,11 +1,11 @@
 from scapy.all import *
 from pprint import pprint
 
-
-
-
-
-def compare(originalfile, replays):
+def remove_padding(packet):
+    if 'Padding' in packet:
+        del packet['Padding']
+    return packet
+def compare(originalfile, replays, ignore_padding= False):
     # PcapReader generator
 
 
@@ -18,9 +18,14 @@ def compare(originalfile, replays):
         packet_1.time = None
         packet_2.time = None
 
+        if ignore_padding:
+            packet_1 = remove_padding(packet_1)
+            packet_2 = remove_padding(packet_2)
+
         if packet_1 != packet_2:
             pprint("Разница в пакете номер:" +str(count))
             return
+
         #pprint("сравнил пакет: " +str(count))
         count = count+1
     pprint("Содержимое файлов совпадает")
@@ -61,8 +66,8 @@ def compare_two_packets(file1, file2):
 
 
 if __name__ == '__main__':
-    #compare("ftp_download.pcap", "download1.pcap")
+    compare("original.pcap", "captured.pcap", True)
     # переписать код, так что бы сразу искали
-    #find_packet("first_diff.pcap","download1.pcap")
-    compare_two_packets("packet_small.pcap","packet_big.pcap")
+    #find_packet("one.pcap","captured.pcap")
+    #compare_two_packets("packet_small.pcap","packet_big.pcap")
 
