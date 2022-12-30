@@ -1,6 +1,7 @@
 from scapy.all import *
 from pprint import pprint
 
+# ToDo: move this function into shared library. It is used by checkRoundRobinBalancing also
 def remove_padding(packet):
     if 'Padding' in packet:
         del packet['Padding']

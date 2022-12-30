@@ -106,7 +106,10 @@ def check_result(original, balanced, ignore_bytesize= False):
 
 if __name__ == '__main__':
 
-    # ToDo: add check what all unsupported files went to first port
+    # ToDo: add check what all unsupported packets went to first port
+
+
+    # ToDo: move this code to shared library. It is used for example in checkRoundRobinBalancing
 
     # clear temp directory
     temp_array = glob.glob("Temp_dir/*")
@@ -141,4 +144,5 @@ if __name__ == '__main__':
 
     balanced_info = get_tshark_reports_put_to_temp(balanced_array)
 
-    check_result(original_info, balanced_info, False)
+                                                #ignore_bytesize
+    check_result(original_info, balanced_info, True)
