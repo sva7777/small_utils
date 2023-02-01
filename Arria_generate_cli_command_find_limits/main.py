@@ -8,4 +8,4 @@ def add_multi_ip(network, count):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    add_multi_ip("192.169.0.0/16",253)
+    add_multi_ip("192.169.0.0/24",256)
