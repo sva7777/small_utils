@@ -53,6 +53,7 @@ if __name__ == '__main__':
 
     original_gen= process_file('original.json')
 
+    # ToDo: rewrite code. Find output in directory
     balanced_files.append( "1.json" )
     balanced_files.append( "2.json" )
     balanced_files.append( "3.json" )
