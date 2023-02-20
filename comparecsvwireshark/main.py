@@ -4,7 +4,9 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 import json
+import glob
 from enum import Enum
+from pprint import pprint
 
 class TypeOfCompare(Enum):
     IP = 1
@@ -43,7 +45,7 @@ def compare_files(fileoriginal_gen , balanced_files, compare) :
                     print("unsupported compare type")
 
         if res == False:
-            print(str(entry)+'\n');
+            pprint(str(entry)+'\n');
 
 
 
@@ -51,15 +53,23 @@ if __name__ == '__main__':
 
     balanced_files = []
 
-    original_gen= process_file('original.json')
+    # search one pcap file in Original directry
+    original_array = glob.glob("Original/*.json")
 
-    # ToDo: rewrite code. Find output in directory
-    balanced_files.append( "1.json" )
-    balanced_files.append( "2.json" )
-    balanced_files.append( "3.json" )
-    balanced_files.append( "4.json" )
+    # check what there is only one json file
+    if len(original_array) != 1:
+        pprint("В каталоге Original найдено {} json файлов, а ожидается один pcap файл".format(len(original_array)))
+        exit(1)
 
-    compare_files(original_gen, balanced_files, TypeOfCompare.TCP_OR_UDP )
+    # search pcap files in Balanced directory
+    balanced_array = glob.glob("Balanced/*.json")
+
+    # search pcap files in Balanced directory
+    balanced_array = glob.glob("Balanced/*.json")
+
+    original_gen= process_file(original_array[0])
+
+    compare_files(original_gen, balanced_array, TypeOfCompare.TCP_OR_UDP )
 
 
 

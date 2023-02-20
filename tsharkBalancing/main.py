@@ -97,17 +97,16 @@ def check_result(original, balanced, ignore_bytesize= False):
 
     pprint("start IP+IP symmetrized check")
 
-    pprint( is_different_worker(original, balanced, "ipv4", ignore_bytesize) )
-    pprint(is_different_worker(original, balanced, "ipv6", ignore_bytesize))
+    pprint("is different? {}".format(is_different_worker(original, balanced, "ipv4", ignore_bytesize) ))
+    pprint("is different? {}".format(is_different_worker(original, balanced, "ipv6", ignore_bytesize)))
 
     pprint("start 5 Turple check")
-    pprint( is_different_worker(original, balanced, "tcp", ignore_bytesize) )
-    pprint(is_different_worker(original, balanced, "udp", ignore_bytesize))
+    pprint("is deffrent? {}".format( is_different_worker(original, balanced, "tcp", ignore_bytesize) ))
+    pprint("isis_different_worker(original, balanced, "udp", ignore_bytesize))
 
 if __name__ == '__main__':
 
     # ToDo: add check what all unsupported packets went to first port
-
 
     # ToDo: move this code to shared library. It is used for example in checkRoundRobinBalancing
 
@@ -140,7 +139,6 @@ if __name__ == '__main__':
         if os.path.basename(item) == os.path.basename(original_array[0]):
             pprint("Совпадение имени исходного файла и файла после балансировки")
             exit(1)
-
 
     balanced_info = get_tshark_reports_put_to_temp(balanced_array)
 
