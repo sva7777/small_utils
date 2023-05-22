@@ -101,8 +101,8 @@ def check_result(original, balanced, ignore_bytesize= False):
     pprint("is different? {}".format(is_different_worker(original, balanced, "ipv6", ignore_bytesize)))
 
     pprint("start 5 Turple check")
-    pprint("is deffrent? {}".format( is_different_worker(original, balanced, "tcp", ignore_bytesize) ))
-    pprint("isis_different_worker(original, balanced, "udp", ignore_bytesize))
+    pprint("is diffrent? {}".format(is_different_worker(original, balanced, "tcp", ignore_bytesize) ))
+    pprint("is diffrent? {}".format(is_different_worker(original, balanced, "udp", ignore_bytesize)))
 
 if __name__ == '__main__':
 
