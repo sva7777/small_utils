@@ -3,39 +3,41 @@ import glob
 from pprint import pprint
 from scapy.all import *
 
+
 def remove_padding(packet):
-    if 'Padding' in packet:
-        del packet['Padding']
+    if "Padding" in packet:
+        del packet["Padding"]
     return packet
 
 
-
 def worker_compare(original, balanced, ignore_paddding):
-
     scapy_original = PcapReader(original[0]).read_all()
     scapy_balanced = []
 
     balanced_total_packets_count = 0
     for balanced_item in balanced:
         temp_scapy_reader = PcapReader(balanced_item).read_all()
-        balanced_total_packets_count+=len(temp_scapy_reader)
+        balanced_total_packets_count += len(temp_scapy_reader)
         scapy_balanced.append(temp_scapy_reader)
 
     if len(scapy_original) != balanced_total_packets_count:
-        pprint("Не совпадает количество пакетов в исходном файле ({}) и балансировки ({})".format(len(scapy_original), balanced_total_packets_count))
+        pprint(
+            "Не совпадает количество пакетов в исходном файле ({}) и балансировки ({})".format(
+                len(scapy_original), balanced_total_packets_count
+            )
+        )
         exit(1)
 
     # убираем padding если требуется
     if ignore_paddding:
         for packet in scapy_original:
             # не нравится вот так далеть, но работает
-            packet= remove_padding(packet)
-
+            packet = remove_padding(packet)
 
         for balanced_item in scapy_balanced:
             for packet in balanced_item:
-                    # не нравится вот так далеть, но работает
-                    packet = remove_padding(packet)
+                # не нравится вот так далеть, но работает
+                packet = remove_padding(packet)
 
     # начинается основная работа
 
@@ -44,7 +46,6 @@ def worker_compare(original, balanced, ignore_paddding):
         found = False
         count += 1
         for balanced_item in scapy_balanced:
-
             for balanced_packet in balanced_item:
                 if original_packet == balanced_packet:
                     found = True
@@ -54,13 +55,17 @@ def worker_compare(original, balanced, ignore_paddding):
                 break
 
         if not found:
-            pprint("Не найдет пакет номер {} , его содержимое {}".format(count, original_packet  ))
+            pprint(
+                "Не найдет пакет номер {} , его содержимое {}".format(
+                    count, original_packet
+                )
+            )
             exit(1)
 
     pprint("Все ок")
 
-if __name__ == '__main__':
 
+if __name__ == "__main__":
     # ToDo: не будет проверки ситуации когда в исходнм pcap есть дублирующие пакеты.
 
     # search one pcap file in Original directry
@@ -68,9 +73,12 @@ if __name__ == '__main__':
 
     # check what there is only one pcap file
     if len(original_array) != 1:
-        pprint("В каталоге Original найдено {} pcap файлов, а ожидается один pcap файл".format(len(original_array)))
+        pprint(
+            "В каталоге Original найдено {} pcap файлов, а ожидается один pcap файл".format(
+                len(original_array)
+            )
+        )
         exit(1)
-
 
     # search pcap files in Balanced directory
     balanced_array = glob("Balanced/*.pcap")
@@ -86,6 +94,5 @@ if __name__ == '__main__':
             pprint("Совпадение имени исходного файла и файла после балансировки")
             exit(1)
 
-                                                # ignore_paddding
+            # ignore_paddding
     worker_compare(original_array, balanced_array, True)
-
