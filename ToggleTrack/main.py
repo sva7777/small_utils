@@ -88,7 +88,6 @@ if __name__ == "__main__":
 
     toggle = Toogle()
 
-    # ToDo move key to OS env variable
     toggle.setAPIKey(api_key)
 
     tasks = list()
