@@ -71,9 +71,10 @@ class Toogle:
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
-        pprint(
+        print(
             "не коррректные параметры скрипта. Правильные %дата(2022-09-24)% %workspace_id%  %api_key%"
         )
+        sys.exit(1)
     date_of_report = sys.argv[1]
     workspace_id = sys.argv[2]
     api_key = sys.argv[3]
