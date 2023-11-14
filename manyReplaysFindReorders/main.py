@@ -70,6 +70,6 @@ def compare_two_packets(file1, file2):
 
 if __name__ == "__main__":
     compare("original.pcap", "captured.pcap", True)
-    # переписать код, так что бы сразу искали
+    # переписать код, так что бы сразу искали пакет где разница
     # find_packet("one.pcap","captured.pcap")
     # compare_two_packets("packet_small.pcap","packet_big.pcap")
