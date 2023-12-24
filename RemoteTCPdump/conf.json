@@ -3,23 +3,23 @@
     {
       "ip": "10.210.26.148",
       "user": "ubuntu",
-      "pass": "zxc1234",
+      "pass": "1234",
       "path": "/home/ubuntu/vasily_agg_off",
-      "tcpreplay_cmd": "echo zxc1234 |  sudo -S timeout -s 2 15s tcpdump -i enp1s0f0 -w enp1s0f0.pcap -Q in"
+      "tcpreplay_cmd": "echo 1234 |  sudo -S timeout -s 2 15s tcpdump -i enp1s0f0 -w enp1s0f0.pcap -Q in"
     },
     {
       "ip": "10.210.26.148",
       "user": "ubuntu",
-      "pass": "zxc1234",
+      "pass": "1234",
       "path": "/home/ubuntu/vasily_agg_off",
-      "tcpreplay_cmd": "echo zxc1234 | sudo -S timeout -s 2 15s  tcpdump -i enp1s0f1 -w enp1s0f1.pcap -Q in"
+      "tcpreplay_cmd": "echo 1234 | sudo -S timeout -s 2 15s  tcpdump -i enp1s0f1 -w enp1s0f1.pcap -Q in"
     },
     {
       "ip": "10.210.26.57",
       "user": "ubuntu",
-      "pass": "zxc1234",
+      "pass": "1234",
       "path": "/home/ubuntu/vasily_agg_off",
-      "tcpreplay_cmd": "echo zxc1234 | sudo -S timeout -s 2 15s tcpdump -i enp1s0f1 -w enp1s0f1.pcap -Q in"
+      "tcpreplay_cmd": "echo 1234 | sudo -S timeout -s 2 15s tcpdump -i enp1s0f1 -w enp1s0f1.pcap -Q in"
     }
   ]
 }
