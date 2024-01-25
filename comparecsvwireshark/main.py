@@ -42,8 +42,8 @@ def compare_files(fileoriginal_gen, balanced_files, compare):
                         entry["Адрес A"] == inner_entry["Адрес A"]
                         and entry["Адрес B"] == inner_entry["Адрес B"]
                         and entry["Пакеты"] == inner_entry["Пакеты"]
-                        and entry["Port A"] == inner_entry["Port A"]
-                        and entry["Port B"] == inner_entry["Port B"]
+                        and entry["Порт A"] == inner_entry["Порт A"]
+                        and entry["Порт B"] == inner_entry["Порт B"]
                     ):
                         res = True
                         break
@@ -77,4 +77,4 @@ if __name__ == "__main__":
 
     original_gen = process_file(original_array[0])
 
-    compare_files(original_gen, balanced_array, TypeOfCompare.IP)
+    compare_files(original_gen, balanced_array, TypeOfCompare.TCP_OR_UDP)
