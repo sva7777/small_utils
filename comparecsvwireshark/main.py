@@ -31,16 +31,16 @@ def compare_files(fileoriginal_gen, balanced_files, compare):
             for inner_entry in gen:
                 if compare == TypeOfCompare.IP:
                     if (
-                        entry["Address A"] == inner_entry["Address A"]
-                        and entry["Address B"] == inner_entry["Address B"]
+                        entry["Адрес A"] == inner_entry["Адрес A"]
+                        and entry["Адрес B"] == inner_entry["Адрес B"]
                         and entry["Пакеты"] == inner_entry["Пакеты"]
                     ):
                         res = True
                         break
                 elif compare == TypeOfCompare.TCP_OR_UDP:
                     if (
-                        entry["Address A"] == inner_entry["Address A"]
-                        and entry["Address B"] == inner_entry["Address B"]
+                        entry["Адрес A"] == inner_entry["Адрес A"]
+                        and entry["Адрес B"] == inner_entry["Адрес B"]
                         and entry["Пакеты"] == inner_entry["Пакеты"]
                         and entry["Port A"] == inner_entry["Port A"]
                         and entry["Port B"] == inner_entry["Port B"]
@@ -63,7 +63,7 @@ if __name__ == "__main__":
     # check what there is only one json file
     if len(original_array) != 1:
         pprint(
-            "В каталоге Original найдено {} json файлов, а ожидается один pcap файл".format(
+            "В каталоге Original найдено {} json файлов, а ожидается один json файл".format(
                 len(original_array)
             )
         )
@@ -77,4 +77,4 @@ if __name__ == "__main__":
 
     original_gen = process_file(original_array[0])
 
-    compare_files(original_gen, balanced_array, TypeOfCompare.TCP_OR_UDP)
+    compare_files(original_gen, balanced_array, TypeOfCompare.IP)
