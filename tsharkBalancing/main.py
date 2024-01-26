@@ -4,6 +4,7 @@ import glob
 import subprocess
 from pprint import pprint
 from collections import namedtuple
+import click
 
 
 FlowInfo = namedtuple(
@@ -56,7 +57,7 @@ def process_tshark_report(filename):
         )
 
 
-def get_tshark_reports_put_to_temp(filenames):
+def get_tshark_reports_put_to_temp(filenames, wsprofile: str):
     if type(filenames) == str:
         filenames = [filenames]
 
@@ -67,12 +68,16 @@ def get_tshark_reports_put_to_temp(filenames):
         for item in temp.getDict().values():
             key, file_name = item
             with open(file_name, "w") as output_file_handler:
-                tshark_return_code = subprocess.run(
-                    ["tshark", "-r", file, "-q", "-z", key, "-C", "NoTunnels"],
+                tshark_return = subprocess.run(
+                    ["tshark", "-r", file, "-q", "-z", key, "-C", wsprofile],
                     stdout=output_file_handler,
                     stderr=subprocess.PIPE,
                     encoding="utf-8",
                 )
+                #check tshark return code
+                if tshark_return.returncode !=0:
+                    raise Exception("tshark return code =="+ str(tshark_return.returncode))
+
         res.append(temp)
     return res
 
@@ -137,9 +142,10 @@ def check_result(original, balanced, ignore_bytesize=False):
     )
 
 
-if __name__ == "__main__":
-    # ToDo: add check what all unsupported packets went to first port
-
+@click.command()
+@click.option('--wsprofile', default="NoTunnels",show_default=True,  help='Name of wireshark profile to use.')
+@click.option('--ignore_packet_size_missmatch', is_flag=True, default=True,  help='Ignore mismatch in packet byte size. ')
+def main(wsprofile: str, ignore_packet_size_missmatch :bool):
     # ToDo: move this code to shared library. It is used for example in checkRoundRobinBalancing
 
     # clear temp directory
@@ -159,7 +165,7 @@ if __name__ == "__main__":
         )
         exit(1)
 
-    original_info = get_tshark_reports_put_to_temp(original_array)
+    original_info = get_tshark_reports_put_to_temp(original_array, wsprofile)
 
     # search pcap files in Balanced directory
     balanced_array = glob.glob("Balanced/*.pcap")
@@ -175,7 +181,13 @@ if __name__ == "__main__":
             pprint("Совпадение имени исходного файла и файла после балансировки")
             exit(1)
 
-    balanced_info = get_tshark_reports_put_to_temp(balanced_array)
+    balanced_info = get_tshark_reports_put_to_temp(balanced_array, wsprofile)
 
     # ignore_bytesize
-    check_result(original_info, balanced_info, True)
+    check_result(original_info, balanced_info, ignore_packet_size_missmatch)
+
+
+if __name__ == "__main__":
+    main()
+
+
